@@ -22,7 +22,12 @@ set(SOURCES
   winsparkle.rc
 )
 
-add_library(winsparkle STATIC
+set(HEADERS
+  ../include/winsparkle.h
+  ../include/winsparkle-version.h
+)
+
+add_library(winsparkle SHARED
   ${SOURCES}
 )
 
@@ -38,3 +43,5 @@ install(TARGETS winsparkle
   LIBRARY DESTINATION bin
   ARCHIVE DESTINATION lib
 )
+
+install(FILES ${HEADERS} DESTINATION include)

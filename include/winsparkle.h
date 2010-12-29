@@ -41,7 +41,7 @@ extern "C" {
 #ifdef BUILDING_WIN_SPARKLE
     #define WIN_SPARKLE_API __declspec(dllexport)
 #else
-    #define WIN_SPARKLE_API __declspec(dllimport)
+    #define WIN_SPARKLE_API
 #endif
 
 /*--------------------------------------------------------------------------*
