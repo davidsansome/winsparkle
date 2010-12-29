@@ -124,8 +124,10 @@ protected:
     // sizer for the main area of the dialog (to the right of the icon)
     wxSizer      *m_mainAreaSizer;
 
-    static const int MESSAGE_AREA_WIDTH = 300;
+    static const int MESSAGE_AREA_WIDTH;
 };
+
+const int WinSparkleDialog::MESSAGE_AREA_WIDTH = 300;
 
 
 WinSparkleDialog::WinSparkleDialog()
@@ -254,9 +256,12 @@ private:
     // current appcast data (only valid after StateUpdateAvailable())
     Appcast       m_appcast;
 
-    static const int RELNOTES_WIDTH = 400;
-    static const int RELNOTES_HEIGHT = 200;
+    static const int RELNOTES_WIDTH;
+    static const int RELNOTES_HEIGHT;
 };
+
+const int UpdateDialog::RELNOTES_WIDTH = 400;
+const int UpdateDialog::RELNOTES_HEIGHT = 200;
 
 
 UpdateDialog::UpdateDialog() : m_timer(this)
@@ -810,7 +815,7 @@ class UIThreadAccess
 public:
     UIThreadAccess() : m_lock(ms_uiThreadCS) {}
 
-    App& App()
+    App& GetApp()
     {
         StartIfNeeded();
         return wxGetApp();
@@ -896,7 +901,7 @@ void UI::ShutDown()
     if ( !uit.IsRunning() )
         return;
 
-    uit.App().SendMsg(MSG_TERMINATE);
+    uit.GetApp().SendMsg(MSG_TERMINATE);
     uit.ShutDownThread();
 }
 
@@ -909,7 +914,7 @@ void UI::NotifyNoUpdates()
     if ( !uit.IsRunning() )
         return;
 
-    uit.App().SendMsg(MSG_NO_UPDATE_FOUND);
+    uit.GetApp().SendMsg(MSG_NO_UPDATE_FOUND);
 }
 
 
@@ -917,7 +922,7 @@ void UI::NotifyNoUpdates()
 void UI::NotifyUpdateAvailable(const Appcast& info)
 {
     UIThreadAccess uit;
-    uit.App().SendMsg(MSG_UPDATE_AVAILABLE, new Appcast(info));
+    uit.GetApp().SendMsg(MSG_UPDATE_AVAILABLE, new Appcast(info));
 }
 
 
@@ -929,7 +934,7 @@ void UI::NotifyUpdateError()
     if ( !uit.IsRunning() )
         return;
 
-    uit.App().SendMsg(MSG_UPDATE_ERROR);
+    uit.GetApp().SendMsg(MSG_UPDATE_ERROR);
 }
 
 
@@ -937,7 +942,7 @@ void UI::NotifyUpdateError()
 void UI::ShowCheckingUpdates()
 {
     UIThreadAccess uit;
-    uit.App().SendMsg(MSG_SHOW_CHECKING_UPDATES);
+    uit.GetApp().SendMsg(MSG_SHOW_CHECKING_UPDATES);
 }
 
 
@@ -945,7 +950,7 @@ void UI::ShowCheckingUpdates()
 void UI::AskForPermission()
 {
     UIThreadAccess uit;
-    uit.App().SendMsg(MSG_ASK_FOR_PERMISSION);
+    uit.GetApp().SendMsg(MSG_ASK_FOR_PERMISSION);
 }
 
 } // namespace winsparkle
